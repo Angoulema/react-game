@@ -1,0 +1,10 @@
+@import "./../../sass/colors.scss";
+
+.app-main {
+  background-color: $b-text-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $b-text-dark;
+}
