@@ -1,4 +1,6 @@
 @import "./../../sass/colors.scss";
+@import "./../../sass/constants.scss";
+@import "./../game-card/game-card.scss";
 
 .app-main {
   background-color: $b-text-light;
@@ -7,4 +9,24 @@
   align-items: center;
   justify-content: center;
   color: $b-text-dark;
+
+  .game-field, .game-stat {
+    font-size: 1.6rem;
+    width: 500px;
+    border-radius: $radius-all;
+    border: 1px solid $b-primary;
+    padding: 1rem;
+  }
+  .game-field {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+  }
+  .game-stat {
+    display: flex;
+    justify-content: center;
+  }
+
 }
