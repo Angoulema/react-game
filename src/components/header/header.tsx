@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  BrowserRouter as Router, Route, Switch, Redirect, Link,
+} from 'react-router-dom';
 import './header.scss';
 
 const Header: React.FC = () => {
@@ -20,9 +23,16 @@ const Header: React.FC = () => {
         <p className="font-main-title">
           Memory. Figure Skating edition
         </p>
-        <i className="fa fa-music btn-header" onClick={MusicClickHandler}></i>
-        <i className="fa fa-volume-up btn-header" onClick={VolumeClickHandler}></i>
-        <i className="fa fa-cogs btn-header" onClick={SettingsHandler}></i>
+        <nav className="navigation">
+          <i className="fa fa-music btn-header" onClick={MusicClickHandler}></i>
+          <i className="fa fa-volume-up btn-header" onClick={VolumeClickHandler}></i>
+          <Link
+            to="/settings"
+            className="navigation-link"
+            >
+              <i className="fa fa-cogs btn-header" onClick={SettingsHandler}></i>
+          </Link>
+        </nav>
     </header>
   )
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./game-field.scss";
-import cards from './cards';
+import cards1 from './cards1';
 import cover from './assets/cover.png';
 import GameCard from './../game-card';
 import { IGameCard } from './../../constants/interfaces';
@@ -32,6 +32,9 @@ const GameField: React.FC<IForGameField> = ({
   const [pairOfCards, setPairOfCards] = useState<any[]>([]);
   const [pairOfKeys, setPairOfKeys] = useState<any[]>([]);
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
+
+  // поменять потом согласно настройкам
+  const cards = cards1;
     
     
     // по крайней мере загружает и показывает. почитать про useRef
@@ -96,13 +99,12 @@ const GameField: React.FC<IForGameField> = ({
 
   return(
     <main className="app-main">
-      <div className="game-stat">
+      <div className="game-stat" style={{ width: allGameCards.length === 24 ? 700 : 600}}>
         <p>Your score:</p>
         &nbsp;
         {counter}
       </div>
-      <div className="game-field">
-          
+      <div className="game-field" style={{ width: allGameCards.length === 24 ? 700 : 600}}>
         {allGameCards.map((card, i) => {
 
           let isFlipped = false; 
