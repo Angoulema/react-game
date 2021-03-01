@@ -6,6 +6,7 @@ import './App.scss';
 import Header from './../header';
 import GameField from './../game-field';
 import Settings from './../settings';
+import Statistics from './../statistics';
 import Footer from './../footer';
 
 // interface IForGameField {
@@ -13,10 +14,13 @@ import Footer from './../footer';
 // }
 
 const App: React.FC = () => {
-  const [fieldSize, setFieldSize] = useState<number>(20); // 12 || 16 || 20 || 24
+  const [fieldSize, setFieldSize] = useState<number>(20); // 16 || 20 || 24
+  const [cardSet, setCardSet] = useState<number>(1); // 1 || 2 || 3
   // const [counter, setCounter] = useState<number>(0);
   const [isTimerOn, setTimerOn] = useState<boolean>(false);
   const [isGameNew, setIsGameNew] = useState<boolean>(true);
+
+
 
   return (
     <Router>
@@ -24,12 +28,21 @@ const App: React.FC = () => {
         <Header />
         <Switch>
         <Route path="/settings" render={() => (
-            <Settings updateFieldSize={setFieldSize} /> 
+            <Settings fieldSize={fieldSize}
+              updateFieldSize={setFieldSize}
+              isGameNew={isGameNew}
+              updateIsGameNew={setIsGameNew}
+              cardSet={cardSet}
+              updateCardSet={setCardSet} /> 
+            )} />
+        <Route path="/statistics" render={() => (
+            <Statistics  /> 
             )} />
           <Route path="/" render={() =>  (
             <GameField fieldSize={fieldSize}
               isGameNew={isGameNew}
-              updateIsGameNew={setIsGameNew} />
+              updateIsGameNew={setIsGameNew}
+              cardSet={cardSet} />
           )} />
         </Switch>
         <Footer />

@@ -9,12 +9,21 @@
   font-size: calc(10px + 2vmin);
   color: $b-secondary-light;
   padding: 0 50px;
+  @media screen and (max-width: 1000px) {
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 767px) {
+    padding: 0 10px;
+  }
 
   .navigation {
     width: 300px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media screen and (max-width: 767px) {
+      width: 250px;
+    }
     
     .btn-header {
       width: 34px;

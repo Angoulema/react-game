@@ -7,6 +7,10 @@
   border-radius: $radius-all;
   cursor: pointer;
   border: 1px solid $b-secondary-dark;
+  @media screen and (max-width: 767px) {
+    width: 75px;
+    height: 75px;
+  }
 
   &.flipped .inner {
     transform: rotateY(180deg);

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import "./game-field.scss";
-import cards1 from './cards1';
+import cards1 from './../../cards/cards1';
+import cards2 from './../../cards/cards2';
+import cards3 from './../../cards/cards3';
 import cover from './assets/cover.png';
 import GameCard from './../game-card';
 import { IGameCard } from './../../constants/interfaces';
@@ -9,6 +11,7 @@ interface IForGameField {
   fieldSize: number,
   isGameNew: boolean,
   updateIsGameNew: React.Dispatch<React.SetStateAction<boolean>>,
+  cardSet: number,
 }
 
 interface IForCard {
@@ -25,8 +28,10 @@ function shuffleArray(arr:any[]) {
 const GameField: React.FC<IForGameField> = ({
   fieldSize, // размер поля
   isGameNew,
-  updateIsGameNew
+  updateIsGameNew,
+  cardSet,
 }) => {
+  const [, forceUpdate] = useState();
   const [counter, setCounter] = useState<number>(0);
   const [allGameCards, setAllGameCards] = useState<any[]>([]);
   const [pairOfCards, setPairOfCards] = useState<any[]>([]);
@@ -34,14 +39,23 @@ const GameField: React.FC<IForGameField> = ({
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
 
   // поменять потом согласно настройкам
-  const cards = cards1;
+  let cards: any;
+  if (cardSet === 1) {
+    cards = cards1;
+  } else if (cardSet === 2) {
+    cards = cards2;
+  } else {
+    cards = cards3;
+  };
+  
     
     
     // по крайней мере загружает и показывает. почитать про useRef
+    // с запуском новой игры проблемы
     useEffect(() => {
-      const gameCards: any[] = [];
-      let currentCards: any[] = gameCards;
       if (isGameNew) {
+        const gameCards: any[] = [];
+        let currentCards: any[] = gameCards;
         for (let i = 0; i < (fieldSize / 2); i++) {
           const card: IForCard = {
             id: cards[i].name,
@@ -55,7 +69,7 @@ const GameField: React.FC<IForGameField> = ({
         setAllGameCards([...currentCards]);
         updateIsGameNew(false);
       };
-    }, [ ])
+    }, [ fieldSize, isGameNew ])
 
     useEffect(() => {
       if (pairOfKeys.length === 2) {
@@ -66,10 +80,12 @@ const GameField: React.FC<IForGameField> = ({
         } else {
           // потом добавить код на удаление сеттаймаута при анмаунтинге!
           // упс, вот так почему-то назад не закрываются.
+          // потому что рендер заканчивается до очищения
           // setTimeout(() => {
           //   setPairOfCards([]);
           //   setPairOfKeys([]);
-          // }, 1000);
+          //   console.log('hi settimeout');
+          // }, 700);
           // а вот так закрывается, но слишком быстро(
           setPairOfCards([]);
           setPairOfKeys([]);
@@ -80,6 +96,12 @@ const GameField: React.FC<IForGameField> = ({
       };
       console.log('in the useEffect');
       console.log(pairOfCards, pairOfKeys);
+      if (finalizedCards.length === fieldSize) {
+        alert('you won!');
+        setFinalizedCards([]);
+        setCounter(0);
+        updateIsGameNew(true); 
+      }
       
     }, [ pairOfKeys, pairOfCards, finalizedCards])
     
@@ -89,6 +111,7 @@ const GameField: React.FC<IForGameField> = ({
     const nodeKey = e.currentTarget.dataset.key;
     console.log(imgID, nodeKey, e.currentTarget.dataset.flipped);
     if (finalizedCards.includes(nodeKey)) return;
+    if (pairOfCards.includes(imgID) && pairOfKeys.includes(nodeKey)) return;
 
     setPairOfCards((pair) => [...pair, imgID]);
     setPairOfKeys((pair) => [...pair, nodeKey]);
@@ -97,17 +120,18 @@ const GameField: React.FC<IForGameField> = ({
     console.log('click');
   };
 
+  // style={{ width: allGameCards.length === 24 ? 700 : 600}}
   return(
     <main className="app-main">
-      <div className="game-stat" style={{ width: allGameCards.length === 24 ? 700 : 600}}>
+      <div className="game-stat">
         <p>Your score:</p>
         &nbsp;
         {counter}
       </div>
-      <div className="game-field" style={{ width: allGameCards.length === 24 ? 700 : 600}}>
+      <div className="game-field">
         {allGameCards.map((card, i) => {
 
-          let isFlipped = false; 
+          let isFlipped = false;
           if (pairOfKeys.includes(i.toString())) isFlipped = true;
           if (finalizedCards.includes(i.toString())) isFlipped = true;
           console.log(i, isFlipped);
