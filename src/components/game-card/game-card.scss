@@ -62,6 +62,12 @@
         transform: scale(1.05);
       }
     }
+    > .back.secondary {
+      background: $b-secondary-light;
+    }
+    > .back.primary {
+      background: $b-primary-light;
+    }
   }
 
 

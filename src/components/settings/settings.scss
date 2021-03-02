@@ -4,13 +4,98 @@
 .settings-page {
   background-color: $b-text-light;
   display: flex;
-  flex-direction: column;
+    flex-direction: column;
   align-items: center;
   justify-content: center;
   color: $b-text-dark;
   font-size: 1.6rem;
+  
 
-  .submit-btns {
-    display: none;
+  &-container {
+    width: 900px;
+    display: grid;
+    grid-template-rows: 1fr 50px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+
+    @media screen and (max-width: 901px) {
+      width: 700px;
+      gap: 7px;
+    }
+    @media screen and (max-width: 767px) {
+      width: 500px;
+      gap: 5px;
+      grid-template-rows: 1fr 40px;
+      padding: 5px;
+    }
+
+    > .settings-game, .settings-sounds {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid $b-primary;
+      padding: 5px;
+      border-radius: $radius-all;
+      line-height: 150%;
+    }
+    > .settings-game {
+      .fieldset-opts {
+        margin-bottom: 5px;
+        border-radius: $radius-all;
+        margin: 5px 0;
+        > legend {
+          margin: 5px 0;
+          font-family: 'Yanone Kaffeesatz', sans-serif;
+          font-size: 2.2rem;
+          font-weight: 500;
+          color: $b-primary;
+          border-bottom: 1px dashed $b-primary;
+        }
+      }
+  
+      .color-pics-options {
+        .pics-color .light-light {
+          color: $b-text-light;
+          background-color: $b-primary-dark;
+          border-radius: $radius-all;
+          padding: 2px 3px;
+        }
+        .pics-color .light-secondary {
+          color: $b-secondary-light;
+          background-color: $b-primary-dark;
+          border-radius: $radius-all;
+          padding: 2px 3px;
+        }
+        .pics-color .light-primary {
+          color: $b-primary-light;
+          
+        }
+      }
+    }
+    > .come-back-btn {
+      grid-row: 2;
+      grid-column: 1/span 2;
+      font-family: 'Yanone Kaffeesatz', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      align-self: center;
+      
+
+      > .settings-link {
+        color: $b-primary;
+        border-radius: $radius-all;
+        transition: 0.3s ease-in-out;
+        padding: 5px;
+        &:hover {
+          background-color: $b-primary;
+          color: $b-text-light;
+        }
+      }
+    }
+  
+    .submit-btns {
+      display: none;
+    }
   }
+
+  
 }

@@ -16,7 +16,7 @@ import Footer from './../footer';
 const App: React.FC = () => {
   const [fieldSize, setFieldSize] = useState<number>(20); // 16 || 20 || 24
   const [cardSet, setCardSet] = useState<number>(1); // 1 || 2 || 3
-  // const [counter, setCounter] = useState<number>(0);
+  const [cardColor, setCardColor] = useState<number>(0); // 0 || 1 || 2
   const [isTimerOn, setTimerOn] = useState<boolean>(false);
   const [isGameNew, setIsGameNew] = useState<boolean>(true);
 
@@ -33,7 +33,9 @@ const App: React.FC = () => {
               isGameNew={isGameNew}
               updateIsGameNew={setIsGameNew}
               cardSet={cardSet}
-              updateCardSet={setCardSet} /> 
+              updateCardSet={setCardSet}
+              cardColor={cardColor}
+              updateCardColor={setCardColor} /> 
             )} />
         <Route path="/statistics" render={() => (
             <Statistics  /> 
@@ -42,7 +44,8 @@ const App: React.FC = () => {
             <GameField fieldSize={fieldSize}
               isGameNew={isGameNew}
               updateIsGameNew={setIsGameNew}
-              cardSet={cardSet} />
+              cardSet={cardSet}
+              cardColor={cardColor} />
           )} />
         </Switch>
         <Footer />

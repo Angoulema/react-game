@@ -12,6 +12,7 @@ interface IForGameField {
   isGameNew: boolean,
   updateIsGameNew: React.Dispatch<React.SetStateAction<boolean>>,
   cardSet: number,
+  cardColor: number,
 }
 
 interface IForCard {
@@ -30,6 +31,7 @@ const GameField: React.FC<IForGameField> = ({
   isGameNew,
   updateIsGameNew,
   cardSet,
+  cardColor,
 }) => {
   const [, forceUpdate] = useState();
   const [counter, setCounter] = useState<number>(0);
@@ -38,7 +40,7 @@ const GameField: React.FC<IForGameField> = ({
   const [pairOfKeys, setPairOfKeys] = useState<any[]>([]);
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
 
-  // поменять потом согласно настройкам
+  // поменять потом согласно настройкам; запихать в юзэффект?
   let cards: any;
   if (cardSet === 1) {
     cards = cards1;
@@ -135,6 +137,16 @@ const GameField: React.FC<IForGameField> = ({
           if (pairOfKeys.includes(i.toString())) isFlipped = true;
           if (finalizedCards.includes(i.toString())) isFlipped = true;
           console.log(i, isFlipped);
+
+          // меняем цвет рубашки в зависимости от настроек
+          let colorPlus: string = "";
+          switch (cardColor) {
+            case 1: colorPlus="secondary";
+            break;
+            case 2: colorPlus="primary";
+            break;
+            default: colorPlus="";
+          };
           return (
             // <GameCard picURL={card.picURL}
             //   id={card.id}
@@ -151,7 +163,7 @@ const GameField: React.FC<IForGameField> = ({
                 <div className="front">
                     <img src={card.picURL} id={card.id} className={`front-card-img`} alt="cover" />
                   </div>
-                  <div className="back">
+                <div className={`back ${colorPlus}`}>
                     <img src={cover} alt="cover" />
                 </div>
               </div>
