@@ -13,19 +13,30 @@ interface IForSetting {
   updateCardSet: React.Dispatch<React.SetStateAction<number>>,
   cardColor: number,
   updateCardColor: React.Dispatch<React.SetStateAction<number>>,
+  isSoundsOn: boolean,
+  updateSoundOn: React.Dispatch<React.SetStateAction<boolean>>,
+  isMusicOn: boolean,
+  updateMusicOn: React.Dispatch<React.SetStateAction<boolean>>,
+  soundVolume: number,
+  updateSoundVolume: React.Dispatch<React.SetStateAction<number>>,
+  musicVolume: number,
+  updateMisucVolume: React.Dispatch<React.SetStateAction<number>>,
 }
 
 const Settings: React.FC<IForSetting> = (props: IForSetting) => {
 
   const {
     fieldSize, updateFieldSize, isGameNew, updateIsGameNew, cardSet,
-    updateCardSet, cardColor, updateCardColor,
+    updateCardSet, cardColor, updateCardColor, soundVolume, updateSoundVolume,
+    musicVolume, updateMisucVolume, isSoundsOn, updateSoundOn,
+    isMusicOn, updateMusicOn,
   } = props;
 
   useEffect(() => {
     updateIsGameNew(true);
   }, []);
 
+  const MAX_SOUND = 1;
   const gameFieldOptions: number[] = [16, 20, 24];
   const cardSetOptions: number[] = [1, 2, 3];
   const cardColorOptions: number[] = [0, 1, 2];
@@ -65,7 +76,7 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
         <div className="settings-game">
           <form onSubmit={OnSubmit}>
             <fieldset className="set-gamefield-options fieldset-opts">
-              <legend>
+              <legend className="settings-legend">
                 Set gamefield size
               </legend>
               <p className="gamefield-options">
@@ -93,7 +104,7 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
           </form>
           <form onSubmit={OnSubmit}>
             <fieldset className="set-pics-options fieldset-opts">
-              <legend>
+              <legend className="settings-legend">
                 Choose pictures set
               </legend>
               <p className="pics-options">
@@ -121,7 +132,7 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
           </form>
           <form onSubmit={OnSubmit}>
             <fieldset className="color-pics-options fieldset-opts">
-              <legend>
+              <legend className="settings-legend">
                 Choose card-back color
               </legend>
               <p className="pics-color">
@@ -150,6 +161,24 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
           </form>
         </div>
         <div className="settings-sounds">
+          <form onSubmit={OnSubmit}>
+            <fieldset className="music-options fieldset-opts">
+              <legend className="settings-legend">
+                Music settings
+              </legend>
+              there will be tumbler
+              and range
+            </fieldset>
+          </form>
+          <form onSubmit={OnSubmit}>
+            <fieldset className="sounds-options fieldset-opts">
+              <legend className="settings-legend">
+                Sound settings
+              </legend>
+              there will be tumbler
+              and range
+            </fieldset>
+          </form>
 
         </div>
         

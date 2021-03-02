@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import useSound from 'use-sound';
+import { PlayFunction } from 'use-sound/dist/types';
 import "./game-field.scss";
 import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
@@ -14,6 +16,8 @@ interface IForGameField {
   updateIsGameNew: React.Dispatch<React.SetStateAction<boolean>>,
   cardSet: number,
   cardColor: number,
+  sound: PlayFunction,
+  isSoundsOn: boolean,
 }
 
 interface IForCard {
@@ -34,6 +38,8 @@ const GameField: React.FC<IForGameField> = ({
   updateIsGameNew,
   cardSet,
   cardColor,
+  sound,
+  isSoundsOn
 }) => {
   const [counter, setCounter] = useState<number>(0);
   const [allGameCards, setAllGameCards] = useState<any[]>([]);
@@ -121,6 +127,7 @@ const GameField: React.FC<IForGameField> = ({
     if (finalizedCards.includes(card)) return;
     if (pairOfCards.includes(card)) return;
     card.isFlipped = !card.isFlipped;
+    if (isSoundsOn) sound();
     setPairOfCards((pair) => [...pair, card]);
     setCounter(counter + 1);
   }

@@ -37,21 +37,21 @@
       border-radius: $radius-all;
       line-height: 150%;
     }
-    > .settings-game {
-      .fieldset-opts {
-        margin-bottom: 5px;
-        border-radius: $radius-all;
+    .fieldset-opts {
+      margin-bottom: 5px;
+      border-radius: $radius-all;
+      margin: 5px 0;
+      legend {
         margin: 5px 0;
-        > legend {
-          margin: 5px 0;
-          font-family: 'Yanone Kaffeesatz', sans-serif;
-          font-size: 2.2rem;
-          font-weight: 500;
-          color: $b-primary;
-          border-bottom: 1px dashed $b-primary;
-        }
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 500;
+        color: $b-primary;
+        border-bottom: 1px dashed $b-primary;
       }
-  
+    }
+    > .settings-game {
+      
       .color-pics-options {
         .pics-color .light-light {
           color: $b-text-light;

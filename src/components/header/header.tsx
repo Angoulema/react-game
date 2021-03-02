@@ -1,17 +1,47 @@
 import React from 'react';
+import useSound from 'use-sound';
 import {
   BrowserRouter as Router, Route, Switch, Redirect, Link,
 } from 'react-router-dom';
 import './header.scss';
+import bensoundUkulele from './../../sounds/bensoundUkulele.mp3';
+import { PlayFunction } from 'use-sound/dist/types';
+// isSoundsOn={isSoundsOn}
+//           updateSoundOn={setIsSoundsOn}
+//           isMusicOn={isMusicOn}
+//           updateMusicOn={setIsMusicOn}
 
-const Header: React.FC = () => {
+interface IForHeader {
+  isSoundsOn: boolean,
+  updateSoundOn: React.Dispatch<React.SetStateAction<boolean>>,
+  isMusicOn: boolean,
+  updateMusicOn: React.Dispatch<React.SetStateAction<boolean>>,
+  playMusic: PlayFunction,
+  stop: (id?: string) => void,
+}
 
+const Header: React.FC<IForHeader> = (props: IForHeader) => {
+  const {
+    isSoundsOn,
+    updateSoundOn,
+    isMusicOn,
+    updateMusicOn,
+    playMusic,
+    stop,
+  } = props;
+  // const [play, { stop }] = useSound(bensoundUkulele);
   const MusicClickHandler = () => {
-    alert('music icon is clicked');
+    updateMusicOn(!isMusicOn);
+    if (isMusicOn) {
+      playMusic();
+    };
+    if (!isMusicOn) {
+      stop();
+    }
   };
 
   const VolumeClickHandler = () => {
-    alert('volume icon is clicked');
+    updateSoundOn(!isSoundsOn);
   };
 
   return(
@@ -20,8 +50,8 @@ const Header: React.FC = () => {
           Memory. Figure Skating edition
         </p>
         <nav className="navigation">
-          <i className="fa fa-music btn-header" onClick={MusicClickHandler}></i>
-          <i className="fa fa-volume-up btn-header" onClick={VolumeClickHandler}></i>
+          <i className={`bi ${isMusicOn ? "bi-music-note-list" : "bi-music-note"} btn-header`} onClick={MusicClickHandler}></i>
+          <i className={`bi ${isSoundsOn ? "bi-volume-up-fill": "bi-volume-mute-fill"} btn-header`} onClick={VolumeClickHandler}></i>
           <Link
             to="/statistics"
             className="navigation-link"
