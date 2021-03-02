@@ -56,7 +56,7 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
     console.log(value);
     updateCardSet(+value);
     updateIsGameNew(true);
-  }
+  };
 
   const CardColorOptionsHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
@@ -64,11 +64,19 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
     console.log(value);
     updateCardColor(+value);
     updateIsGameNew(true);
-  }
+  };
+
+  const MusicHandler = () => {
+    updateMusicOn(!isMusicOn);
+  };
+
+  const SoundHandler = () => {
+    updateSoundOn(!isSoundsOn);
+  };
 
   const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  }
+  };
 
   return (
     <div className="settings-page">
@@ -166,6 +174,11 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
               <legend className="settings-legend">
                 Music settings
               </legend>
+              <span className="toggle">
+                <input id="music-set" className="tgl tgl-skewed" type="checkbox"
+                checked={isMusicOn} onChange={MusicHandler} />
+                <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" htmlFor="music-set"></label>
+              </span>
               there will be tumbler
               and range
             </fieldset>
@@ -175,6 +188,11 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
               <legend className="settings-legend">
                 Sound settings
               </legend>
+              <span className="toggle">
+                <input id="sound-set" className="tgl tgl-skewed" type="checkbox"
+                checked={isSoundsOn} onChange={SoundHandler} />
+                <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" htmlFor="sound-set"></label>
+              </span>
               there will be tumbler
               and range
             </fieldset>
