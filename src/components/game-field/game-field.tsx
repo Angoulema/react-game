@@ -17,7 +17,8 @@ interface IForGameField {
 }
 
 interface IForCard {
-  id: string,
+  id: number,
+  name: string,
   picURL: string,
   isFlipped: boolean,
 }
@@ -34,17 +35,13 @@ const GameField: React.FC<IForGameField> = ({
   cardSet,
   cardColor,
 }) => {
-  const [, forceUpdate] = useState();
   const [counter, setCounter] = useState<number>(0);
   const [allGameCards, setAllGameCards] = useState<any[]>([]);
   const [pairOfCards, setPairOfCards] = useState<any[]>([]);
-  const [pairOfKeys, setPairOfKeys] = useState<any[]>([]);
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
 
   const handle = useFullScreenHandle();
    
-    // по крайней мере загружает и показывает. почитать про useRef
-    // с запуском новой игры проблемы
     useEffect(() => {
       if (isGameNew) {
         let cards: any;
@@ -59,13 +56,21 @@ const GameField: React.FC<IForGameField> = ({
         const gameCards: any[] = [];
         let currentCards: any[] = gameCards;
         for (let i = 0; i < (fieldSize / 2); i++) {
-          const card: IForCard = {
-            id: cards[i].name,
+          const card1: IForCard = {
+            id: i,
+            name: cards[i].name,
             picURL: cards[i].url,
             isFlipped: false,
           };
-          gameCards.push(card);
-          gameCards.push(card);
+          const card2: IForCard = {
+            id: fieldSize - i,
+            name: cards[i].name,
+            picURL: cards[i].url,
+            isFlipped: false,
+          };
+
+          gameCards.push(card1);
+          gameCards.push(card2);
         };
         currentCards = shuffleArray(gameCards);
         setAllGameCards([...currentCards]);
@@ -73,54 +78,52 @@ const GameField: React.FC<IForGameField> = ({
       };
     }, [ isGameNew ])
 
+    const clearPairOfCards = () => {
+      setPairOfCards([]);
+      console.log('should be clean now');
+    };
+    const gameOver = () => {
+      alert('you won!');
+      setFinalizedCards([]);
+      setCounter(0);
+      updateIsGameNew(true);
+    };
+
     useEffect(() => {
-      if (pairOfKeys.length === 2) {
-        if (pairOfCards[0] === pairOfCards[1]) {
-          setFinalizedCards((card) => [...card, ...pairOfKeys]);
+      if (pairOfCards.length === 2) {
+        const first = pairOfCards[0].name;
+        const second = pairOfCards[1].name;
+        if (first === second) {
+          setFinalizedCards((card) => [...card, ...pairOfCards]);
           setPairOfCards([]);
-          setPairOfKeys([]);
         } else {
           // потом добавить код на удаление сеттаймаута при анмаунтинге!
-          // упс, вот так почему-то назад не закрываются.
-          // потому что рендер заканчивается до очищения
-          // setTimeout(() => {
-          //   setPairOfCards([]);
-          //   setPairOfKeys([]);
-          //   console.log('hi settimeout');
-          // }, 700);
-          // а вот так закрывается, но слишком быстро(
-          setPairOfCards([]);
-          setPairOfKeys([]);
-          
-          console.log(pairOfCards, pairOfKeys);
+          pairOfCards[0].isFlipped = !pairOfCards[0].isFlipped;
+          pairOfCards[1].isFlipped = !pairOfCards[1].isFlipped;
+          setTimeout(clearPairOfCards, 700);
+
+          console.log(pairOfCards, );
         }
         
       };
-      console.log('in the useEffect');
-      console.log(pairOfCards, pairOfKeys);
       if (finalizedCards.length === fieldSize) {
-        alert('you won!');
-        setFinalizedCards([]);
-        setCounter(0);
-        updateIsGameNew(true); 
+        setTimeout(gameOver, 700); 
       }
       
-    }, [ pairOfKeys, pairOfCards, finalizedCards])
+    // return () => {
+    //   clearTimeout(clearPairOfCards);
+    //   clearTimeout(gameOver);
+    // }
+    }, [ pairOfCards, finalizedCards])
     
-    // e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  const CardClickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const imgID = (e.currentTarget as Element).id;
-    const nodeKey = e.currentTarget.dataset.key;
-    console.log(imgID, nodeKey, e.currentTarget.dataset.flipped);
-    if (finalizedCards.includes(nodeKey)) return;
-    if (pairOfCards.includes(imgID) && pairOfKeys.includes(nodeKey)) return;
 
-    setPairOfCards((pair) => [...pair, imgID]);
-    setPairOfKeys((pair) => [...pair, nodeKey]);
-
+  const ClickHandler = (card:IForCard) => {
+    if (finalizedCards.includes(card)) return;
+    if (pairOfCards.includes(card)) return;
+    card.isFlipped = !card.isFlipped;
+    setPairOfCards((pair) => [...pair, card]);
     setCounter(counter + 1);
-    console.log('click');
-  };
+  }
 
   const HandleFullScreen = () => {
     if (handle.active) {
@@ -149,10 +152,10 @@ const GameField: React.FC<IForGameField> = ({
         {allGameCards.map((card, i) => {
 
 
-          let isFlipped = false;
-          if (pairOfKeys.includes(i.toString())) isFlipped = true;
-          if (finalizedCards.includes(i.toString())) isFlipped = true;
-          console.log(i, isFlipped);
+          // let isFlipped = false;
+          // if (pairOfKeys.includes(i.toString())) isFlipped = true;
+          // if (finalizedCards.includes(i.toString())) isFlipped = true;
+          // console.log(i, isFlipped);
 
           // меняем цвет рубашки в зависимости от настроек
           let colorPlus: string = "";
@@ -170,14 +173,14 @@ const GameField: React.FC<IForGameField> = ({
             //   updateCounter={setCounter}
             //   counter={counter}
             //   position={i}/>
-            <div id={card.id} className={`game-field-card ${isFlipped ? "flipped" : ""}`} 
-              key={i} 
-              onClick={CardClickHandler}
-              data-key={i}
-              data-flipped={isFlipped}>
+            <div id={card.name} className={`game-field-card ${card.isFlipped ? "flipped" : ""}`} 
+              key={card.id} 
+              onClick={() => ClickHandler(card)}
+              data-key={card.id}
+              data-flipped={card.isFlipped}>
               <div className="inner">
                 <div className="front">
-                    <img src={card.picURL} id={card.id} className={`front-card-img`} alt="cover" />
+                    <img src={card.picURL} id={card.name} className={`front-card-img`} alt="cover" />
                   </div>
                 <div className={`back ${colorPlus}`}>
                     <img src={cover} alt="cover" />
