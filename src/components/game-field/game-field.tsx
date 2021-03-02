@@ -1,4 +1,5 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useCallback, } from 'react';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import "./game-field.scss";
 import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
@@ -40,22 +41,21 @@ const GameField: React.FC<IForGameField> = ({
   const [pairOfKeys, setPairOfKeys] = useState<any[]>([]);
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
 
-  // поменять потом согласно настройкам; запихать в юзэффект?
-  let cards: any;
-  if (cardSet === 1) {
-    cards = cards1;
-  } else if (cardSet === 2) {
-    cards = cards2;
-  } else {
-    cards = cards3;
-  };
-  
-    
-    
+  const handle = useFullScreenHandle();
+   
     // по крайней мере загружает и показывает. почитать про useRef
     // с запуском новой игры проблемы
     useEffect(() => {
       if (isGameNew) {
+        let cards: any;
+        switch (cardSet) {
+          case 1: cards = cards1;
+          break;
+          case 2: cards = cards2;
+          break;
+          default: cards = cards3;
+        };
+        
         const gameCards: any[] = [];
         let currentCards: any[] = gameCards;
         for (let i = 0; i < (fieldSize / 2); i++) {
@@ -71,7 +71,7 @@ const GameField: React.FC<IForGameField> = ({
         setAllGameCards([...currentCards]);
         updateIsGameNew(false);
       };
-    }, [ fieldSize, isGameNew ])
+    }, [ isGameNew ])
 
     useEffect(() => {
       if (pairOfKeys.length === 2) {
@@ -122,16 +122,32 @@ const GameField: React.FC<IForGameField> = ({
     console.log('click');
   };
 
-  // style={{ width: allGameCards.length === 24 ? 700 : 600}}
+  const HandleFullScreen = () => {
+    if (handle.active) {
+      handle.exit();
+    } else {
+      handle.enter();
+    }
+  };
+
+  const screenButton = handle.active ? (<i className="fa fa-compress"></i>) : (<i className="fa fa-expand"></i>);
+
   return(
     <main className="app-main">
+      <FullScreen handle={handle}>
       <div className="game-stat">
-        <p>Your score:</p>
-        &nbsp;
-        {counter}
+        <p>
+          Your score:
+          &nbsp;
+          {counter}
+        </p>
+        <button className="fullscreen-btn" onClick={HandleFullScreen}>
+          {screenButton}
+        </button>
       </div>
       <div className="game-field">
         {allGameCards.map((card, i) => {
+
 
           let isFlipped = false;
           if (pairOfKeys.includes(i.toString())) isFlipped = true;
@@ -172,6 +188,8 @@ const GameField: React.FC<IForGameField> = ({
         })}
 
       </div>
+      </FullScreen>
+      
     </main>
   )
 };

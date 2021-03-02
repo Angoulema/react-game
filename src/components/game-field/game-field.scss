@@ -10,6 +10,14 @@
   justify-content: center;
   color: $b-text-dark;
 
+  .fullscreen-enabled {
+    background-color: $b-text-light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   .game-field, .game-stat {
     font-size: 1.6rem;
     width: 700px;
@@ -20,6 +28,34 @@
     @media screen and (max-width: 767px) {
       width: 500px;
       border: none;
+    }
+  }
+  .game-stat {
+    display: flex;
+    align-items: center;
+
+    > p {
+      margin-right: 6rem;
+      font-family:'Yanone Kaffeesatz', sans-serif;
+      font-size: 2.3rem;
+      color: $b-primary;
+      font-weight: 500;
+    }
+
+    > .fullscreen-btn {
+      font-size: 2rem;
+      padding: 5px;
+      border-radius: $radius-all;
+      border: 1px solid $b-primary;
+      color: $b-primary;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: $b-primary;
+        color: $b-text-light;
+        transform: scale(1.1);
+      }
     }
   }
   .game-field {
