@@ -72,11 +72,17 @@
       }
     }
     .settings-sounds {
+
+      .music-opts, .sound-opts {
+        margin: 7px 0;
+      }
       .toggle {
         position: relative;
         display: flex;
         justify-content: center;
+        margin-top: 5px;
       }
+      // тогглы отсюда https://codepen.io/mallendeo/pen/eLIiG
       .tgl {
         display: none;
         &,

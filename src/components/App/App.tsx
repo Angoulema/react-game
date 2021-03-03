@@ -12,8 +12,6 @@ import Footer from './../footer';
 import info from './../../sounds/info.mp3';
 import bensoundUkulele from './../../sounds/bensoundUkulele.mp3';
 
-// const info = require('./../../sounds/info.wav');
-
 const App: React.FC = () => {
   const [fieldSize, setFieldSize] = useState<number>(20); // 16 || 20 || 24
   const [cardSet, setCardSet] = useState<number>(1); // 1 || 2 || 3
@@ -21,7 +19,7 @@ const App: React.FC = () => {
   const [isGameNew, setIsGameNew] = useState<boolean>(true);
   const [isSoundsOn, setIsSoundsOn] = useState<boolean>(false);
   const [isMusicOn, setIsMusicOn] = useState<boolean>(false);
-  const [soundVolume, setSoundVolume] = useState<number>(1);
+  const [soundVolume, setSoundVolume] = useState<number>(0.5);
   const [musicVolume, setMusicVolume] = useState<number>(0.5);
 
   const [ playSound ] = useSound(info, {volume: soundVolume});
@@ -55,7 +53,10 @@ const App: React.FC = () => {
               soundVolume={soundVolume}
               updateSoundVolume={setSoundVolume}
               musicVolume={musicVolume}
-              updateMisucVolume={setMusicVolume} /> 
+              updateMusicVolume={setMusicVolume}
+              stop={stop}
+              playMusic={playMusic}
+              playSound={playSound} /> 
             )} />
         <Route path="/statistics" render={() => (
             <Statistics  /> 

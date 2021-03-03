@@ -4,12 +4,7 @@ import {
   BrowserRouter as Router, Route, Switch, Redirect, Link,
 } from 'react-router-dom';
 import './header.scss';
-import bensoundUkulele from './../../sounds/bensoundUkulele.mp3';
 import { PlayFunction } from 'use-sound/dist/types';
-// isSoundsOn={isSoundsOn}
-//           updateSoundOn={setIsSoundsOn}
-//           isMusicOn={isMusicOn}
-//           updateMusicOn={setIsMusicOn}
 
 interface IForHeader {
   isSoundsOn: boolean,
@@ -29,7 +24,7 @@ const Header: React.FC<IForHeader> = (props: IForHeader) => {
     playMusic,
     stop,
   } = props;
-  // const [play, { stop }] = useSound(bensoundUkulele);
+
   const MusicClickHandler = () => {
     updateMusicOn(!isMusicOn);
     if (isMusicOn) {

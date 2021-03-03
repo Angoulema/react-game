@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router, Route, Switch, Redirect, Link,
 } from 'react-router-dom';
+import { PlayFunction } from 'use-sound/dist/types';
 import './settings.scss';
 
 interface IForSetting {
@@ -20,7 +21,10 @@ interface IForSetting {
   soundVolume: number,
   updateSoundVolume: React.Dispatch<React.SetStateAction<number>>,
   musicVolume: number,
-  updateMisucVolume: React.Dispatch<React.SetStateAction<number>>,
+  updateMusicVolume: React.Dispatch<React.SetStateAction<number>>,
+  stop: (id?: string) => void,
+  playMusic: PlayFunction,
+  playSound: PlayFunction,
 }
 
 const Settings: React.FC<IForSetting> = (props: IForSetting) => {
@@ -28,15 +32,15 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
   const {
     fieldSize, updateFieldSize, isGameNew, updateIsGameNew, cardSet,
     updateCardSet, cardColor, updateCardColor, soundVolume, updateSoundVolume,
-    musicVolume, updateMisucVolume, isSoundsOn, updateSoundOn,
-    isMusicOn, updateMusicOn,
+    musicVolume, updateMusicVolume, isSoundsOn, updateSoundOn,
+    isMusicOn, updateMusicOn, stop, playMusic, playSound,
   } = props;
 
   useEffect(() => {
     updateIsGameNew(true);
   }, []);
 
-  const MAX_SOUND = 1;
+  // const MAX_SOUND = 1;
   const gameFieldOptions: number[] = [16, 20, 24];
   const cardSetOptions: number[] = [1, 2, 3];
   const cardColorOptions: number[] = [0, 1, 2];
@@ -68,11 +72,30 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
 
   const MusicHandler = () => {
     updateMusicOn(!isMusicOn);
+    if (isMusicOn) {
+      playMusic();
+    };
+    if (!isMusicOn) {
+      stop();
+    }
   };
 
   const SoundHandler = () => {
     updateSoundOn(!isSoundsOn);
   };
+
+  const MusicVolumeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    const value = +target.value / 10;
+    updateMusicVolume(value);
+  }
+
+  const soundVolumeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    const value = +target.value / 10;
+    updateSoundVolume(value);
+    if (isSoundsOn) playSound();
+  }
 
   const OnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -179,8 +202,14 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
                 checked={isMusicOn} onChange={MusicHandler} />
                 <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" htmlFor="music-set"></label>
               </span>
-              there will be tumbler
-              and range
+              <p className="music-opts">
+                <input type="range" min="0" max="10" step="1" defaultValue={musicVolume * 10} 
+                  className="range-input" id="music-range"
+                  onChange={MusicVolumeHandler} />
+              </p>
+              <p>
+                <input type="submit" className="submit-btns"/>
+              </p>
             </fieldset>
           </form>
           <form onSubmit={OnSubmit}>
@@ -193,8 +222,14 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
                 checked={isSoundsOn} onChange={SoundHandler} />
                 <label className="tgl-btn" data-tg-off="OFF" data-tg-on="ON" htmlFor="sound-set"></label>
               </span>
-              there will be tumbler
-              and range
+              <p className="sound-opts">
+                <input type="range" min="0" max="10" step="1" defaultValue={soundVolume * 10} 
+                  className="range-input" id="sound-range"
+                  onChange={soundVolumeHandler} />
+              </p>
+              <p>
+                <input type="submit" className="submit-btns"/>
+              </p>
             </fieldset>
           </form>
 
