@@ -237,7 +237,8 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
         
         <div className="come-back-btn">
           <Link to="/"
-            className="settings-link">
+            className="settings-link"
+            tabIndex={10}>
               Back to game
           </Link>
         </div>

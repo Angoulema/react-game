@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import useSound from 'use-sound';
 import { PlayFunction } from 'use-sound/dist/types';
+import hotkeys from 'hotkeys-js';
 import "./game-field.scss";
 import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
@@ -140,7 +141,7 @@ const GameField: React.FC<IForGameField> = ({
     }
   };
 
-  const screenButton = handle.active ? (<i className="fa fa-compress"></i>) : (<i className="fa fa-expand"></i>);
+  const screenButton = handle.active ? (<i tabIndex={0} className="fa fa-compress"></i>) : (<i tabIndex={5} className="fa fa-expand"></i>);
 
   return(
     <main className="app-main">
@@ -157,12 +158,6 @@ const GameField: React.FC<IForGameField> = ({
       </div>
       <div className="game-field">
         {allGameCards.map((card, i) => {
-
-
-          // let isFlipped = false;
-          // if (pairOfKeys.includes(i.toString())) isFlipped = true;
-          // if (finalizedCards.includes(i.toString())) isFlipped = true;
-          // console.log(i, isFlipped);
 
           // меняем цвет рубашки в зависимости от настроек
           let colorPlus: string = "";

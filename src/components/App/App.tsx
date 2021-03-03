@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router, Route, Switch, Redirect,
 } from 'react-router-dom';
 import useSound from 'use-sound';
+import hotkeys from 'hotkeys-js';
 import './App.scss';
 import Header from './../header';
 import GameField from './../game-field';
@@ -25,8 +26,6 @@ const App: React.FC = () => {
   const [ playSound ] = useSound(info, {volume: soundVolume});
   const [ playMusic, { stop } ] = useSound(bensoundUkulele, {volume: musicVolume});
 
-
-
   return (
     <Router>
       <div className="app">
@@ -35,7 +34,12 @@ const App: React.FC = () => {
           isMusicOn={isMusicOn}
           updateMusicOn={setIsMusicOn}
           playMusic={playMusic}
-          stop={stop} />
+          stop={stop}
+          soundVolume={soundVolume}
+          updateSoundVolume={setSoundVolume}
+          musicVolume={musicVolume}
+          updateMusicVolume={setMusicVolume}
+        />
         <Switch>
         <Route path="/settings" render={() => (
             <Settings fieldSize={fieldSize}
