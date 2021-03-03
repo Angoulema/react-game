@@ -232,6 +232,58 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
               </p>
             </fieldset>
           </form>
+          <div className="control-group fieldset-opts">
+            <p className="settings-legend new-block">
+            Hotkeys to control settings of the game
+            </p>
+            <div className="control-group-art">
+              Press
+              &ensp;
+              <kbd>
+                m 
+              </kbd>
+              &ensp;
+              to stop or start the music replay.
+            </div>
+            <div className="control-group-art">
+              Press
+              &ensp;
+              <kbd>
+                s
+              </kbd>
+              &ensp;
+              to turn sounds on or off.
+            </div>
+            <div className="control-group-art">
+              Press
+              &ensp;
+              <kbd>
+                c
+              </kbd>
+              &ensp;
+              to go to the settings page.
+            </div>
+            <div className="control-group-art">
+              Press
+              &ensp;
+              <kbd>
+                t
+              </kbd>
+              &ensp;
+               to go to the statistics page.
+            </div>
+            <div className="control-group-art">
+              Press
+              &ensp;
+              <kbd>
+                g
+              </kbd>
+              &ensp;
+               to go to the main page.
+            </div>
+            <p className="control-warning">Please, don't use redirecting keys in the fullscreen mode.</p>
+            <p className="music-c">Royalty Free Music from Bensound.</p>         
+          </div>
 
         </div>
         
