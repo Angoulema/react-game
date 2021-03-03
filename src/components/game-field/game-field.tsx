@@ -8,7 +8,6 @@ import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
 import cards3 from './../../cards/cards3';
 import cover from './assets/cover.png';
-import storage from './../../constants/storage-function';
 import GameCard from './../game-card';
 import { IGameCard } from './../../constants/interfaces';
 
@@ -29,6 +28,10 @@ interface IForCard {
   name: string,
   picURL: string,
   isFlipped: boolean,
+}
+interface IForStatObj {
+  name: string,
+  steps: number,
 }
 
 function shuffleArray(arr:any[]) {
@@ -103,8 +106,7 @@ const GameField: React.FC<IForGameField> = ({
       console.log('should be clean now');
     };
     const gameOver = () => {
-      alert('you won!');
-      HandleNewGame();
+      setShowModal(true);
     };
 
     useEffect(() => {
@@ -167,16 +169,26 @@ const GameField: React.FC<IForGameField> = ({
     if (inputValue.length < 3) {
       BasicAttention = 'You name should have at least 3 characters!';
     } else {
-      const newRecord = {
+      let currentResults: any[]; 
+      const newRecord: IForStatObj = {
         name: inputValue,
         steps: counter,
       };
       switch (fieldSize) {
-        case 16: storage('MFSEField16', newRecord);
+        case 16: let stats16 = localStorage.getItem('MFSEField16');
+          currentResults = !!stats16 ? JSON.parse(localStorage.getItem('MFSEField16') || '{}') : []; 
+          currentResults.push(newRecord);
+          localStorage.setItem('MFSEField16', JSON.stringify(currentResults));
         break;
-        case 20: storage('MFSEField20', newRecord);
+        case 20: let stats20 = localStorage.getItem('MFSEField20');
+          currentResults = !!stats20 ? JSON.parse(localStorage.getItem('MFSEField20') || '{}') : []; 
+          currentResults.push(newRecord);
+         localStorage.setItem('MFSEField20', JSON.stringify(currentResults));
         break;
-        case 24: storage('MFSEField24', newRecord);
+        case 24: let stats24 = localStorage.getItem('MFSEField24');
+          currentResults = !!stats24 ?JSON.parse(localStorage.getItem('MFSEField24') || '{}') : []; 
+          currentResults.push(newRecord);
+          localStorage.setItem('MFSEField24', JSON.stringify(currentResults));
         break;
         default: return;
       };
@@ -267,8 +279,7 @@ const GameField: React.FC<IForGameField> = ({
         })}
       </div>
       {ModalWindow}
-      </FullScreen>
-      
+      </FullScreen> 
     </main>
   )
 };

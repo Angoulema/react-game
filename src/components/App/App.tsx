@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router, Route, Switch, Redirect,
 } from 'react-router-dom';
 import useSound from 'use-sound';
-import hotkeys from 'hotkeys-js';
 import './App.scss';
 import Header from './../header';
 import GameField from './../game-field';
@@ -12,7 +11,6 @@ import Statistics from './../statistics';
 import Footer from './../footer';
 import info from './../../sounds/info.mp3';
 import bensoundUkulele from './../../sounds/bensoundUkulele.mp3';
-import storage from './../../constants/storage-function';
 
 const App: React.FC = () => {
   const [fieldSize, setFieldSize] = useState<number>(20); // 16 || 20 || 24
@@ -23,9 +21,7 @@ const App: React.FC = () => {
   const [isMusicOn, setIsMusicOn] = useState<boolean>(false);
   const [soundVolume, setSoundVolume] = useState<number>(0.5);
   const [musicVolume, setMusicVolume] = useState<number>(0.5);
-  const [showModal, setShowModal] = useState<boolean>(true);
-  // const [statsFor16, setStatsFor16] = useState<any>(storage('MFSEField16'));
-  // const [statsFor20, setStatsFor20] = useState<any>(storage('MFSEField20'));
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const [ playSound ] = useSound(info, {volume: soundVolume});
   const [ playMusic, { stop } ] = useSound(bensoundUkulele, {volume: musicVolume});
