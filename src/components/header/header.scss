@@ -43,7 +43,9 @@
       align-items: center;
       cursor: pointer;
       color: $b-secondary-light;
-  
+      &:focus {
+        border: 1px solid $b-secondary-light;
+      }
       &:hover {
         background-color: $b-secondary-light;
         color: $b-primary-dark;

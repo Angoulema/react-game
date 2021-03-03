@@ -18,6 +18,7 @@ interface IForHeader {
   updateSoundVolume: React.Dispatch<React.SetStateAction<number>>,
   musicVolume: number,
   updateMusicVolume: React.Dispatch<React.SetStateAction<number>>,
+  showModal: boolean,
 }
 
 const Header: React.FC<IForHeader> = (props: IForHeader) => {
@@ -28,11 +29,13 @@ const Header: React.FC<IForHeader> = (props: IForHeader) => {
     updateMusicOn,
     playMusic,
     stop,
+    showModal,
   } = props;
 
   let history = useHistory();
 
   const redirect = (path: string = '/') => {
+    if (showModal) return;
     history.push(path);
   };
 
@@ -92,20 +95,12 @@ const Header: React.FC<IForHeader> = (props: IForHeader) => {
           <i className={`bi ${isSoundsOn ? "bi-volume-up-fill": "bi-volume-mute-fill"} btn-header`}
             onClick={VolumeClickHandler}
             tabIndex={2}></i>
-          <Link
-            to="/statistics"
-            className="navigation-link"
+          <i className="fa fa-book btn-header"
             tabIndex={3}
-            >
-            <i className="fa fa-book btn-header"></i>
-          </Link>
-          <Link
-            to="/settings"
-            className="navigation-link"
+            onClick={() => redirect('/statistics')}></i>
+          <i className="fa fa-cogs btn-header"
             tabIndex={4}
-            >
-              <i className="fa fa-cogs btn-header"></i>
-          </Link>
+            onClick={() => redirect('/settings')}></i>
         </nav>
     </header>
   )

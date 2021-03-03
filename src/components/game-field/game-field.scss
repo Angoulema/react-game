@@ -9,8 +9,10 @@
   align-items: center;
   justify-content: center;
   color: $b-text-dark;
+  position: relative;
 
   .fullscreen-enabled {
+    position: relative;
     background-color: $b-text-light;
     display: flex;
     flex-direction: column;
@@ -30,19 +32,22 @@
       border: none;
     }
   }
+
   .game-stat {
+    margin-top: 5px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     > p {
-      margin-right: 6rem;
       font-family:'Yanone Kaffeesatz', sans-serif;
       font-size: 2.3rem;
       color: $b-primary;
       font-weight: 500;
+      align-self: center;
     }
 
-    > .fullscreen-btn {
+    > .field-header-btns {
       font-size: 2rem;
       padding: 5px;
       border-radius: $radius-all;
@@ -50,6 +55,13 @@
       color: $b-primary;
       cursor: pointer;
       transition: 0.3s ease;
+
+      &.new-btn {
+        align-self: start;
+      }
+      &.fullscreen-btn {
+        margin-left: 9rem;
+      }
 
       &:hover {
         background-color: $b-primary;
@@ -76,10 +88,70 @@
       gap: 5px;
     }
   }
-  .game-stat {
-    margin-top: 5px;
-    display: flex;
-    justify-content: center;
-  }
 
+  .modal-window {
+    position: absolute;
+    border-radius: $radius-all;
+    width: 700px;
+    height: 500px;
+    top: calc((100% - 500px) / 2);
+    left: calc((100vw - 700px) / 2);
+    background-color: $b-primary-dark;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px 4px $b-primary,
+     inset 0px 0px 5px 7px $b-secondary;
+    font-size: 1.6rem;
+    padding: 10px;
+
+    @media screen and (max-width: 767px) {
+      width: 480px;
+      height: 400px;
+      top: calc((100% - 400px) / 2);
+      left: calc((100vw - 480px) / 2);
+    }
+
+    &-greeting {
+      font-size: 2.5rem;
+      font-style: italic;
+      color: $b-secondary-light;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 767px) {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+    &-input-zone {
+      color: $b-secondary-light;
+      padding: 5px 0;
+      &-input {
+        background-color: $b-secondary-light;
+        color: $b-text-dark;
+        font-size: 1.6rem;
+        padding: 3px;
+        border-radius: $radius-all;
+        margin: 2rem 0;
+      }
+    }
+    &-btn {
+      font-size: 1.6rem;
+      color: $b-secondary-light;
+      border: 1px solid $b-secondary-light;
+      border-radius: $radius-all;
+      transition: 0.3s ease-in-out;
+      margin-top: 4rem;
+      padding: 7px 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: $b-secondary-light;
+        color: $b-primary;
+        box-shadow: 0px 0px 5px 4px $b-secondary;
+      }
+      @media screen and (max-width: 767px) {
+        margin-top: 2rem;
+      }
+    }
+  }
 }

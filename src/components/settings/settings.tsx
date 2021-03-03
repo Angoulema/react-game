@@ -142,19 +142,19 @@ const Settings: React.FC<IForSetting> = (props: IForSetting) => {
                 <input type="radio" value={cardSetOptions[0]} checked={cardSet === cardSetOptions[0]}
                   onChange={CardSetOptionsHandler}/>
                 &nbsp;
-                Set 1: figure skaters' asses
+                Set 1: Yuzuru Hanyu
               </p>
               <p className="pics-options">
                 <input type="radio" value={cardSetOptions[1]} checked={cardSet === cardSetOptions[1]}
                   onChange={CardSetOptionsHandler}/>
                 &nbsp;
-                Set 2: Yuzuru Hanyu
+                Set 2: figure skaters' asses
               </p>
               <p className="pics-options">
                 <input type="radio" value={cardSetOptions[2]} checked={cardSet === cardSetOptions[2]}
                   onChange={CardSetOptionsHandler}/>
                 &nbsp;
-                Set 2: Yuzuru Hanyu again 
+                Set 3: Yuzuru Hanyu again 
               </p>
               <p>
                 <input type="submit" className="submit-btns"/>

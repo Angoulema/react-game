@@ -8,6 +8,7 @@ import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
 import cards3 from './../../cards/cards3';
 import cover from './assets/cover.png';
+import storage from './../../constants/storage-function';
 import GameCard from './../game-card';
 import { IGameCard } from './../../constants/interfaces';
 
@@ -19,6 +20,8 @@ interface IForGameField {
   cardColor: number,
   sound: PlayFunction,
   isSoundsOn: boolean,
+  showModal: boolean,
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 interface IForCard {
@@ -34,18 +37,21 @@ function shuffleArray(arr:any[]) {
 }
 
 const GameField: React.FC<IForGameField> = ({
-  fieldSize, // размер поля
+  fieldSize,
   isGameNew,
   updateIsGameNew,
   cardSet,
   cardColor,
   sound,
-  isSoundsOn
+  isSoundsOn,
+  showModal,
+  setShowModal,
 }) => {
   const [counter, setCounter] = useState<number>(0);
   const [allGameCards, setAllGameCards] = useState<any[]>([]);
   const [pairOfCards, setPairOfCards] = useState<any[]>([]);
   const [finalizedCards, setFinalizedCards] = useState<any[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handle = useFullScreenHandle();
    
@@ -53,9 +59,9 @@ const GameField: React.FC<IForGameField> = ({
       if (isGameNew) {
         let cards: any;
         switch (cardSet) {
-          case 1: cards = cards1;
+          case 1: cards = cards2;
           break;
-          case 2: cards = cards2;
+          case 2: cards = cards1;
           break;
           default: cards = cards3;
         };
@@ -85,15 +91,20 @@ const GameField: React.FC<IForGameField> = ({
       };
     }, [ isGameNew ])
 
+    const HandleNewGame =() => {
+      setFinalizedCards([]);
+      setPairOfCards([]);
+      setCounter(0);
+      updateIsGameNew(true);
+    };
+
     const clearPairOfCards = () => {
       setPairOfCards([]);
       console.log('should be clean now');
     };
     const gameOver = () => {
       alert('you won!');
-      setFinalizedCards([]);
-      setCounter(0);
-      updateIsGameNew(true);
+      HandleNewGame();
     };
 
     useEffect(() => {
@@ -111,7 +122,6 @@ const GameField: React.FC<IForGameField> = ({
 
           console.log(pairOfCards, );
         }
-        
       };
       if (finalizedCards.length === fieldSize) {
         setTimeout(gameOver, 700); 
@@ -143,16 +153,80 @@ const GameField: React.FC<IForGameField> = ({
 
   const screenButton = handle.active ? (<i tabIndex={0} className="fa fa-compress"></i>) : (<i tabIndex={5} className="fa fa-expand"></i>);
 
+  let BasicAttention: string = '';
+  const InputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setInputValue(event.target.value);
+  };
+  const KeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      console.log(inputValue);
+    }
+  };
+  const ModalButtonHandler = () => {
+    if (inputValue.length < 3) {
+      BasicAttention = 'You name should have at least 3 characters!';
+    } else {
+      const newRecord = {
+        name: inputValue,
+        steps: counter,
+      };
+      switch (fieldSize) {
+        case 16: storage('MFSEField16', newRecord);
+        break;
+        case 20: storage('MFSEField20', newRecord);
+        break;
+        case 24: storage('MFSEField24', newRecord);
+        break;
+        default: return;
+      };
+      setShowModal(false);
+      setInputValue('');
+      HandleNewGame();
+    };
+  };
+  
+  const ModalWindow = showModal ? (
+    <div className="modal-window">
+      <div className="modal-window-greeting">
+        Congratulations! You won the game in <strong>{counter}</strong> steps!
+      </div>
+      <div className="modal-window-input-zone">
+        <p>Please, enter you name, so we can put you on our table of glory.</p>
+        <input
+          className="modal-window-input-zone-input"
+          type="text"
+          size={20}
+          minLength={3}
+          maxLength={20}
+          spellCheck={false}
+          value={inputValue}
+          onChange={InputChangeHandler}
+          onKeyPress={KeyPressHandler}/>
+        <p>
+          You name should have at least 3 characters!
+        </p>
+      </div>
+      <button className="modal-window-btn"
+        onClick={ModalButtonHandler}>
+        Send and start a new game
+      </button>
+    </div>
+  ) : null;
+
   return(
     <main className="app-main">
       <FullScreen handle={handle}>
       <div className="game-stat">
-        <p>
+        <button className="new-btn field-header-btns" onClick={HandleNewGame}>
+          New Game
+        </button>
+        <p className="score-line">
           Your score:
           &nbsp;
           {counter}
         </p>
-        <button className="fullscreen-btn" onClick={HandleFullScreen}>
+        <button className="fullscreen-btn field-header-btns" onClick={HandleFullScreen}>
           {screenButton}
         </button>
       </div>
@@ -191,8 +265,8 @@ const GameField: React.FC<IForGameField> = ({
             </div>
           )
         })}
-
       </div>
+      {ModalWindow}
       </FullScreen>
       
     </main>
