@@ -34,19 +34,20 @@ const Link: React.FC<ILinkProps> = (props: ILinkProps) => {
 
 const Footer: React.FC = () => {
 
-  
   return(
-    <footer className="app-footer footer flex-space-between">
-      <div className="footer-links">
-        <Link {...author} />
-      </div>
-      <div className="footer-course">
-        <a
-          className="footer-course-link click" href="https://rs.school/js/" target="_blank"
-          rel="noreferrer"
-        >
-          <img src="https://rs.school/images/rs_school_js.svg" alt="RSSchool" />
-        </a>
+    <footer className="app-footer footer">
+      <div className="footer-container">
+        <div className="footer-links">
+          <Link {...author} />
+        </div>
+        <div className="footer-course">
+          <a
+            className="footer-course-link" href="https://rs.school/js/" target="_blank"
+            rel="noreferrer"
+          >
+            <img src="https://rs.school/images/rs_school_js.svg" alt="RSSchool" />
+          </a>
+        </div>
       </div>
     </footer>
   )

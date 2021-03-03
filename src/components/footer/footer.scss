@@ -9,17 +9,17 @@
   justify-content: center;
 }
 
+.footer-container {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media screen and (max-width: 767px) {
+    width: 400px;
+  }
+}
+
 .footer {
-  &-links {
-    color: $b-text-dark;
-    display: flex;
-    align-items: center;
-
-      .base-link {
-        margin-bottom: 6px;
-      }
-    }
-
     .footer-link {
       margin: 0 1rem;
       border-radius: $radius-all;
@@ -38,12 +38,11 @@
         background-color: $b-secondary-light;
         color: $b-text-dark;
       }
-      .footer-link-icon {
+      &-icon {
         margin-right: 5px;
         margin-right: 5px;
         background: $b-primary-dark;
         border-radius: $radius-all;
-        // border: 2px solid white;
       }
     }
   
@@ -56,10 +55,17 @@
     &:hover {
       box-shadow: 0 0 5px 5px $b-secondary-light;
     }
+    &-link {
+      display: block;
+      width: 74px;
+      @media screen and (max-width: 767px) {
+        width: 60px;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      padding: 2px 3px;
+    }
   }
 
-  &-course-link {
-    display: block;
-    width: 74px;
-  }
+  
 }

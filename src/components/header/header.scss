@@ -16,6 +16,14 @@
     padding: 0 10px;
   }
 
+  .font-main-title {
+    @media screen and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    } 
+  }
+
   .navigation {
     width: 300px;
     display: flex;

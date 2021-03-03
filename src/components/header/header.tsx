@@ -81,9 +81,10 @@ const Header: React.FC<IForHeader> = (props: IForHeader) => {
 
   return(
     <header className="app-header">
-        <p className="font-main-title">
-          Memory. Figure Skating edition
-        </p>
+        <h1 className="font-main-title">
+          <span className="font-main-title-part">Memory. </span>
+          <span className="font-main-title-part">Figure Skating edition</span>
+        </h1>
         <nav className="navigation">
           <i className={`bi ${isMusicOn ? "bi-music-note-list" : "bi-music-note"} btn-header`} 
             onClick={MusicClickHandler}
