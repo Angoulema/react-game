@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useCallback, } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import useSound from 'use-sound';
 import { PlayFunction } from 'use-sound/dist/types';
-import hotkeys from 'hotkeys-js';
 import "./game-field.scss";
 import cards1 from './../../cards/cards1';
 import cards2 from './../../cards/cards2';
@@ -103,7 +101,6 @@ const GameField: React.FC<IForGameField> = ({
 
     const clearPairOfCards = () => {
       setPairOfCards([]);
-      console.log('should be clean now');
     };
     const gameOver = () => {
       setShowModal(true);
@@ -121,8 +118,6 @@ const GameField: React.FC<IForGameField> = ({
           pairOfCards[0].isFlipped = !pairOfCards[0].isFlipped;
           pairOfCards[1].isFlipped = !pairOfCards[1].isFlipped;
           setTimeout(clearPairOfCards, 700);
-
-          console.log(pairOfCards, );
         }
       };
       if (finalizedCards.length === fieldSize) {
@@ -162,7 +157,7 @@ const GameField: React.FC<IForGameField> = ({
   };
   const KeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      console.log(inputValue);
+      event.preventDefault();
     }
   };
   const ModalButtonHandler = () => {

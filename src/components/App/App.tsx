@@ -1,6 +1,6 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  BrowserRouter as Router, Route, Switch, Redirect,
+  BrowserRouter as Router, Route, Switch,
 } from 'react-router-dom';
 import useSound from 'use-sound';
 import './App.scss';

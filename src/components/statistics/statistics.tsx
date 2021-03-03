@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router, useHistory,
 } from 'react-router-dom';
@@ -21,20 +21,12 @@ interface IForStatObj {
 }
 
 const Statistics: React.FC = () => {
-
-  
     let stats16 = localStorage.getItem('MFSEField16');
     let stats20 = localStorage.getItem('MFSEField20');
     let stats24 = localStorage.getItem('MFSEField24');
     const statsFor16: IForStatObj[] = !!stats16 ? JSON.parse(localStorage.getItem('MFSEField16') || '{}') : [];
     const statsFor20: IForStatObj[] = !!stats20 ? JSON.parse(localStorage.getItem('MFSEField20') || '{}') : [];
     const statsFor24: IForStatObj[] = !!stats24 ? JSON.parse(localStorage.getItem('MFSEField24') || '{}') : [];
-    console.log(!!statsFor16, !!statsFor20, !!statsFor24);
-    console.log(statsFor16, statsFor20, statsFor24);
-
-  
-
-  const BasicLine: JSX.Element = (<p>No one played this gamefield size yet</p>);
 
   let history = useHistory();
 
@@ -73,11 +65,9 @@ const Statistics: React.FC = () => {
             </div>
             {statsFor24.length === 0 ? (<p>No one played this gamefield size yet</p>) : 
               <StatsFor24Field statsFor24={statsFor24} />}
-          </div>
-          
+          </div> 
         </div>
       </div>
-      
     </main>
   )
 };
@@ -98,7 +88,7 @@ const StatsFor16Field: React.FC<IFor16> = (props: IFor16) => {
       .map((item, index) => {
       return (
         <div className="item" key={index}>
-          {item.name}:&emsp;{item.steps}
+          {item.name}:&emsp;{item.steps} steps
         </div>
       )
     })}
@@ -122,7 +112,7 @@ const StatsFor20Field: React.FC<IFor20> = (props: IFor20) => {
       .map((item, index) => {
       return (
         <div className="item" key={index}>
-          {item.name}:&emsp;{item.steps}
+          {item.name}:&emsp;{item.steps} steps
         </div>
       )
     })}
@@ -146,13 +136,12 @@ const StatsFor24Field: React.FC<IFor24> = (props: IFor24) => {
       .map((item, index) => {
       return (
         <div className="item" key={index}>
-          {item.name}:&emsp;{item.steps}
+          {item.name}:&emsp;{item.steps} steps
         </div>
       )
     })}
   </div>
   )
 };
-
 
 export default Statistics;

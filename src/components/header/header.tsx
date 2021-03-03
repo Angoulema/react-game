@@ -1,7 +1,6 @@
 import React from 'react';
-import useSound from 'use-sound';
 import {
-  BrowserRouter as Router, Route, Switch, Redirect, Link, useHistory,
+  BrowserRouter as Router, useHistory,
 } from 'react-router-dom';
 import hotkeys from 'hotkeys-js';
 import './header.scss';
