@@ -1,0 +1,157 @@
+@import "./../../sass/colors.scss";
+@import "./../../sass/constants.scss";
+@import "./../game-card/game-card.scss";
+
+.app-main {
+  background-color: $b-text-light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $b-text-dark;
+  position: relative;
+
+  .fullscreen-enabled {
+    position: relative;
+    background-color: $b-text-light;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .game-field, .game-stat {
+    font-size: 1.6rem;
+    width: 700px;
+    border-radius: $radius-all;
+    border: 1px solid $b-primary;
+    padding: 1rem;
+
+    @media screen and (max-width: 767px) {
+      width: 500px;
+      border: none;
+    }
+  }
+
+  .game-stat {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > p {
+      font-family:'Yanone Kaffeesatz', sans-serif;
+      font-size: 2.3rem;
+      color: $b-primary;
+      font-weight: 500;
+      align-self: center;
+    }
+
+    > .field-header-btns {
+      font-size: 2rem;
+      padding: 5px;
+      border-radius: $radius-all;
+      border: 1px solid $b-primary;
+      color: $b-primary;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &.new-btn {
+        align-self: start;
+      }
+      &.fullscreen-btn {
+        margin-left: 9rem;
+      }
+
+      &:hover {
+        background-color: $b-primary;
+        color: $b-text-light;
+        transform: scale(1.1);
+      }
+    }
+  }
+  .game-field {
+    margin-bottom: 5px;
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-auto-rows: 100px;
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-flow:column;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 767px) {
+      grid-template-columns: repeat(4, 75px);
+      grid-auto-rows: 75px;
+      gap: 5px;
+    }
+  }
+
+  .modal-window {
+    position: absolute;
+    border-radius: $radius-all;
+    width: 700px;
+    height: 500px;
+    top: calc((100% - 500px) / 2);
+    left: calc((100vw - 700px) / 2);
+    background-color: $b-primary-dark;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px 4px $b-primary,
+     inset 0px 0px 5px 7px $b-secondary;
+    font-size: 1.6rem;
+    padding: 10px;
+
+    @media screen and (max-width: 767px) {
+      width: 480px;
+      height: 400px;
+      top: calc((100% - 400px) / 2);
+      left: calc((100vw - 480px) / 2);
+    }
+
+    &-greeting {
+      font-size: 2.5rem;
+      font-style: italic;
+      color: $b-secondary-light;
+      margin-bottom: 2rem;
+      @media screen and (max-width: 767px) {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+    &-input-zone {
+      color: $b-secondary-light;
+      padding: 5px 0;
+      &-input {
+        background-color: $b-secondary-light;
+        color: $b-text-dark;
+        font-size: 1.6rem;
+        padding: 3px;
+        border-radius: $radius-all;
+        margin: 2rem 0;
+      }
+    }
+    &-btn {
+      font-size: 1.6rem;
+      color: $b-secondary-light;
+      border: 1px solid $b-secondary-light;
+      border-radius: $radius-all;
+      transition: 0.3s ease-in-out;
+      margin-top: 4rem;
+      padding: 7px 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: $b-secondary-light;
+        color: $b-primary;
+        box-shadow: 0px 0px 5px 4px $b-secondary;
+      }
+      @media screen and (max-width: 767px) {
+        margin-top: 2rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+@import "./../../sass/colors.scss";
+@import "./../../sass/constants.scss";
+
+.app-footer {
+  background-color: $b-primary-light;
+  color: $b-text-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-container {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @media screen and (max-width: 767px) {
+    width: 400px;
+  }
+}
+
+.footer {
+    .footer-link {
+      margin: 0 1rem;
+      border-radius: $radius-all;
+      color: $b-text-light;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      transition: 0.6s ease;
+      font-weight: 700;
+      text-decoration: none;
+      height: 24px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $b-secondary-light;
+        color: $b-text-dark;
+      }
+      &-icon {
+        margin-right: 5px;
+        margin-right: 5px;
+        background: $b-primary-dark;
+        border-radius: $radius-all;
+      }
+    }
+  
+
+  &-course {
+    padding: 4px 6px;
+    background-color: $b-secondary-light;
+    transition: 0.6s ease;
+    border-radius: $radius-all;
+    &:hover {
+      box-shadow: 0 0 5px 5px $b-secondary-light;
+    }
+    &-link {
+      display: block;
+      width: 74px;
+      @media screen and (max-width: 767px) {
+        width: 60px;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      padding: 2px 3px;
+    }
+  }
+
+  
+}
